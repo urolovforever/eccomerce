@@ -18,7 +18,9 @@ class ProductListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'name', 'slug', 'category', 'category_name', 'description', 'price', 'image', 'image_2', 'image_3', 'uzum_link', 'yandex_market_link', 'discount_percentage', 'is_featured']
+        fields = ['id', 'name', 'slug', 'product_type', 'category', 'category_name', 'description', 'price',
+                  'colors', 'sizes', 'stock', 'image', 'image_2', 'image_3',
+                  'discount_percentage', 'is_featured']
 
 
 class ProductDetailSerializer(serializers.ModelSerializer):
@@ -27,8 +29,8 @@ class ProductDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'name', 'slug', 'category', 'category_name', 'description', 'price',
-                  'image', 'image_2', 'image_3', 'uzum_link', 'yandex_market_link',
+        fields = ['id', 'name', 'slug', 'product_type', 'category', 'category_name', 'description', 'price',
+                  'colors', 'sizes', 'stock', 'image', 'image_2', 'image_3',
                   'discount_percentage', 'is_featured', 'created_at', 'similar_products']
 
     def get_similar_products(self, obj):
@@ -42,8 +44,8 @@ class ProductAdminSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'name', 'slug', 'category', 'category_name', 'description', 'price',
-                  'image', 'image_2', 'image_3', 'uzum_link', 'yandex_market_link',
+        fields = ['id', 'name', 'slug', 'product_type', 'category', 'category_name', 'description', 'price',
+                  'colors', 'sizes', 'stock', 'image', 'image_2', 'image_3',
                   'discount_percentage', 'is_featured', 'is_active', 'created_at', 'updated_at']
         read_only_fields = ['slug', 'created_at', 'updated_at']
 
@@ -57,6 +59,24 @@ class ProductAdminSerializer(serializers.ModelSerializer):
         """Narx musbat bo'lishi kerak"""
         if value <= 0:
             raise serializers.ValidationError("Narx musbat son bo'lishi kerak")
+        return value
+
+    def validate_stock(self, value):
+        """Miqdor 0 yoki musbat bo'lishi kerak"""
+        if value < 0:
+            raise serializers.ValidationError("Miqdor manfiy bo'lishi mumkin emas")
+        return value
+
+    def validate_colors(self, value):
+        """Ranglar ro'yxati to'g'ri formatda bo'lishi kerak"""
+        if not isinstance(value, list):
+            raise serializers.ValidationError("Ranglar ro'yxat formatida bo'lishi kerak")
+        return value
+
+    def validate_sizes(self, value):
+        """O'lchamlar ro'yxati to'g'ri formatda bo'lishi kerak"""
+        if not isinstance(value, list):
+            raise serializers.ValidationError("O'lchamlar ro'yxat formatida bo'lishi kerak")
         return value
 
 
