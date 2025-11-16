@@ -23,11 +23,38 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    COLOR_CHOICES = [
+        ('qora', 'Qora'),
+        ('oq', 'Oq'),
+        ('qizil', 'Qizil'),
+        ('ko\'k', 'Ko\'k'),
+        ('yashil', 'Yashil'),
+        ('sariq', 'Sariq'),
+        ('pushti', 'Pushti'),
+        ('jigarrang', 'Jigarrang'),
+        ('kulrang', 'Kulrang'),
+        ('to\'q-ko\'k', 'To\'q ko\'k'),
+        ('binafsha', 'Binafsha'),
+        ('apelsin', 'Apelsin'),
+    ]
+
+    SIZE_CHOICES = [
+        ('XS', 'XS'),
+        ('S', 'S'),
+        ('M', 'M'),
+        ('L', 'L'),
+        ('XL', 'XL'),
+        ('XXL', 'XXL'),
+        ('XXXL', 'XXXL'),
+    ]
+
     name = models.CharField(max_length=200, verbose_name="Mahsulot nomi")
     slug = models.SlugField(unique=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', verbose_name="Kategoriya")
     description = models.TextField(verbose_name="Tavsif")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Narx (so'm)")
+    color = models.CharField(max_length=50, choices=COLOR_CHOICES, blank=True, null=True, verbose_name="Rang")
+    size = models.CharField(max_length=10, choices=SIZE_CHOICES, blank=True, null=True, verbose_name="O'lcham")
     image = models.ImageField(upload_to='products/', verbose_name="Asosiy rasm")
     image_2 = models.ImageField(upload_to='products/', blank=True, null=True, verbose_name="Rasm 2")
     image_3 = models.ImageField(upload_to='products/', blank=True, null=True, verbose_name="Rasm 3")

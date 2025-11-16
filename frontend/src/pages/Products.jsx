@@ -11,6 +11,8 @@ function Products() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [priceRange, setPriceRange] = useState({ min: '', max: '' });
+  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedSize, setSelectedSize] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,7 +26,7 @@ function Products() {
 
   useEffect(() => {
     loadProducts();
-  }, [selectedCategory, searchQuery, priceRange.min, priceRange.max, sortBy]);
+  }, [selectedCategory, searchQuery, priceRange.min, priceRange.max, selectedColor, selectedSize, sortBy]);
 
   const loadCategories = async () => {
     try {
@@ -77,6 +79,14 @@ function Products() {
         params.max_price = priceRange.max;
       }
 
+      if (selectedColor) {
+        params.color = selectedColor;
+      }
+
+      if (selectedSize) {
+        params.size = selectedSize;
+      }
+
       if (sortBy) {
         const orderingMap = {
           'price_asc': 'price',
@@ -115,6 +125,8 @@ function Products() {
     setSelectedCategory(null);
     setSearchQuery('');
     setPriceRange({ min: '', max: '' });
+    setSelectedColor('');
+    setSelectedSize('');
     setSortBy('');
   };
 
@@ -122,7 +134,7 @@ function Products() {
     setItemsToShow(prev => prev + 12);
   };
 
-  const hasActiveFilters = selectedCategory || searchQuery || priceRange.min || priceRange.max || sortBy;
+  const hasActiveFilters = selectedCategory || searchQuery || priceRange.min || priceRange.max || selectedColor || selectedSize || sortBy;
   const queryParams = new URLSearchParams(location.search);
   const isNewArrivals = queryParams.get('new') === 'true';
   const isSale = queryParams.get('sale') === 'true';
@@ -187,7 +199,7 @@ function Products() {
             <span>Filter</span>
             {hasActiveFilters && (
               <span className="bg-white text-gray-900 text-xs px-2 py-0.5 rounded-full font-medium">
-                {[selectedCategory, searchQuery, priceRange.min, priceRange.max, sortBy].filter(Boolean).length}
+                {[selectedCategory, searchQuery, priceRange.min, priceRange.max, selectedColor, selectedSize, sortBy].filter(Boolean).length}
               </span>
             )}
           </button>
@@ -227,6 +239,26 @@ function Products() {
               <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-100 text-gray-900 font-light rounded-full text-xs md:text-sm">
                 Gacha: {parseInt(priceRange.max).toLocaleString()} so'm
                 <button onClick={() => setPriceRange({...priceRange, max: ''})} className="hover:text-gray-700">
+                  <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </span>
+            )}
+            {selectedColor && (
+              <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-100 text-gray-900 font-light rounded-full text-xs md:text-sm">
+                Rang: {selectedColor}
+                <button onClick={() => setSelectedColor('')} className="hover:text-gray-700">
+                  <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </span>
+            )}
+            {selectedSize && (
+              <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-100 text-gray-900 font-light rounded-full text-xs md:text-sm">
+                O'lcham: {selectedSize}
+                <button onClick={() => setSelectedSize('')} className="hover:text-gray-700">
                   <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
@@ -298,6 +330,10 @@ function Products() {
         onCategoryChange={setSelectedCategory}
         priceRange={priceRange}
         onPriceChange={setPriceRange}
+        selectedColor={selectedColor}
+        onColorChange={setSelectedColor}
+        selectedSize={selectedSize}
+        onSizeChange={setSelectedSize}
         sortBy={sortBy}
         onSortChange={setSortBy}
         onReset={handleResetFilters}
