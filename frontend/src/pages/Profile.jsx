@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
   UserCircleIcon,
@@ -18,7 +18,9 @@ import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
 import api from '../api/api';
 
 export default function Profile() {
-  const [activeTab, setActiveTab] = useState('account');
+  const [searchParams] = useSearchParams();
+  const tabFromUrl = searchParams.get('tab');
+  const [activeTab, setActiveTab] = useState(tabFromUrl || 'account');
   const [orders, setOrders] = useState([]);
   const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -38,6 +40,13 @@ export default function Profile() {
     }
     loadUserData();
   }, [isAuthenticated, navigate]);
+
+  // Update active tab when URL parameter changes
+  useEffect(() => {
+    if (tabFromUrl && ['account', 'orders', 'wishlist', 'settings'].includes(tabFromUrl)) {
+      setActiveTab(tabFromUrl);
+    }
+  }, [tabFromUrl]);
 
   useEffect(() => {
     if (activeTab === 'orders') {
