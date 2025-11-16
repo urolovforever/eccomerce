@@ -1,18 +1,38 @@
 import { useEffect } from 'react';
 
-function FilterSidebar({ 
+function FilterSidebar({
   isOpen,
   onClose,
-  categories, 
-  selectedCategory, 
+  categories,
+  selectedCategory,
   onCategoryChange,
   priceRange,
   onPriceChange,
+  selectedColor,
+  onColorChange,
+  selectedSize,
+  onSizeChange,
   sortBy,
   onSortChange,
   onReset,
   resultCount
 }) {
+  const colorOptions = [
+    { value: 'qora', label: 'Qora' },
+    { value: 'oq', label: 'Oq' },
+    { value: 'qizil', label: 'Qizil' },
+    { value: "ko'k", label: "Ko'k" },
+    { value: 'yashil', label: 'Yashil' },
+    { value: 'sariq', label: 'Sariq' },
+    { value: 'pushti', label: 'Pushti' },
+    { value: 'jigarrang', label: 'Jigarrang' },
+    { value: 'kulrang', label: 'Kulrang' },
+    { value: "to'q-ko'k", label: "To'q ko'k" },
+    { value: 'binafsha', label: 'Binafsha' },
+    { value: 'apelsin', label: 'Apelsin' },
+  ];
+
+  const sizeOptions = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
   // Escape tugmasi bilan yopish
   useEffect(() => {
     const handleEscape = (e) => {
@@ -140,6 +160,57 @@ function FilterSidebar({
                   className="w-full px-4 py-3 border border-gray-300 rounded-none focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-all text-gray-900 font-light"
                 />
               </div>
+            </div>
+          </div>
+
+          {/* Rang */}
+          <div>
+            <label className="block text-sm font-light text-gray-900 mb-4 tracking-wide uppercase">
+              Rang
+            </label>
+            <select
+              value={selectedColor}
+              onChange={(e) => onColorChange(e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 rounded-none focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-all appearance-none bg-white text-gray-900 font-light"
+            >
+              <option value="">Barchasi</option>
+              {colorOptions.map((color) => (
+                <option key={color.value} value={color.value}>
+                  {color.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* O'lcham */}
+          <div>
+            <label className="block text-sm font-light text-gray-900 mb-4 tracking-wide uppercase">
+              O'lcham
+            </label>
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => onSizeChange('')}
+                className={`px-4 py-2 text-sm font-light transition-all ${
+                  !selectedSize
+                    ? 'bg-gray-900 text-white'
+                    : 'bg-gray-50 text-gray-900 hover:bg-gray-100 border border-gray-300'
+                }`}
+              >
+                Barchasi
+              </button>
+              {sizeOptions.map((size) => (
+                <button
+                  key={size}
+                  onClick={() => onSizeChange(size)}
+                  className={`px-4 py-2 text-sm font-light transition-all ${
+                    selectedSize === size
+                      ? 'bg-gray-900 text-white'
+                      : 'bg-gray-50 text-gray-900 hover:bg-gray-100 border border-gray-300'
+                  }`}
+                >
+                  {size}
+                </button>
+              ))}
             </div>
           </div>
 

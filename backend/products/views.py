@@ -32,6 +32,16 @@ class ProductListView(generics.ListAPIView):
         if discount == 'true':
             queryset = queryset.filter(discount_percentage__gt=0)
 
+        # Rang filter
+        color = self.request.query_params.get('color', None)
+        if color:
+            queryset = queryset.filter(color=color)
+
+        # O'lcham filter
+        size = self.request.query_params.get('size', None)
+        if size:
+            queryset = queryset.filter(size=size)
+
         # Narx oralig'i filter
         min_price = self.request.query_params.get('min_price', None)
         max_price = self.request.query_params.get('max_price', None)

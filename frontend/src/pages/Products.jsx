@@ -11,6 +11,8 @@ function Products() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [priceRange, setPriceRange] = useState({ min: '', max: '' });
+  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedSize, setSelectedSize] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,7 +26,7 @@ function Products() {
 
   useEffect(() => {
     loadProducts();
-  }, [selectedCategory, searchQuery, priceRange.min, priceRange.max, sortBy]);
+  }, [selectedCategory, searchQuery, priceRange.min, priceRange.max, selectedColor, selectedSize, sortBy]);
 
   const loadCategories = async () => {
     try {
@@ -77,6 +79,14 @@ function Products() {
         params.max_price = priceRange.max;
       }
 
+      if (selectedColor) {
+        params.color = selectedColor;
+      }
+
+      if (selectedSize) {
+        params.size = selectedSize;
+      }
+
       if (sortBy) {
         const orderingMap = {
           'price_asc': 'price',
@@ -115,6 +125,8 @@ function Products() {
     setSelectedCategory(null);
     setSearchQuery('');
     setPriceRange({ min: '', max: '' });
+    setSelectedColor('');
+    setSelectedSize('');
     setSortBy('');
   };
 
@@ -122,7 +134,7 @@ function Products() {
     setItemsToShow(prev => prev + 12);
   };
 
-  const hasActiveFilters = selectedCategory || searchQuery || priceRange.min || priceRange.max || sortBy;
+  const hasActiveFilters = selectedCategory || searchQuery || priceRange.min || priceRange.max || selectedColor || selectedSize || sortBy;
   const queryParams = new URLSearchParams(location.search);
   const isNewArrivals = queryParams.get('new') === 'true';
   const isSale = queryParams.get('sale') === 'true';
@@ -187,7 +199,7 @@ function Products() {
             <span>Filter</span>
             {hasActiveFilters && (
               <span className="bg-white text-gray-900 text-xs px-2 py-0.5 rounded-full font-medium">
-                {[selectedCategory, searchQuery, priceRange.min, priceRange.max, sortBy].filter(Boolean).length}
+                {[selectedCategory, searchQuery, priceRange.min, priceRange.max, selectedColor, selectedSize, sortBy].filter(Boolean).length}
               </span>
             )}
           </button>
@@ -233,6 +245,26 @@ function Products() {
                 </button>
               </span>
             )}
+            {selectedColor && (
+              <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-100 text-gray-900 font-light rounded-full text-xs md:text-sm">
+                Rang: {selectedColor}
+                <button onClick={() => setSelectedColor('')} className="hover:text-gray-700">
+                  <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </span>
+            )}
+            {selectedSize && (
+              <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-100 text-gray-900 font-light rounded-full text-xs md:text-sm">
+                O'lcham: {selectedSize}
+                <button onClick={() => setSelectedSize('')} className="hover:text-gray-700">
+                  <svg className="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </span>
+            )}
             <button
               onClick={handleResetFilters}
               className="text-xs md:text-sm text-gray-900 hover:text-gray-700 underline font-light"
@@ -241,30 +273,6 @@ function Products() {
             </button>
           </div>
         )}
-
-        {/* Search Bar */}
-        <div className="mb-8 relative">
-          <input
-            type="text"
-            placeholder="Mahsulot qidirish..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-none focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-all text-gray-900 font-light"
-          />
-          <svg className="absolute left-4 top-3.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery('')}
-              className="absolute right-4 top-3.5 text-gray-400 hover:text-gray-600"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          )}
-        </div>
 
         {/* Products Grid */}
         {loading ? (
@@ -322,6 +330,10 @@ function Products() {
         onCategoryChange={setSelectedCategory}
         priceRange={priceRange}
         onPriceChange={setPriceRange}
+        selectedColor={selectedColor}
+        onColorChange={setSelectedColor}
+        selectedSize={selectedSize}
+        onSizeChange={setSelectedSize}
         sortBy={sortBy}
         onSortChange={setSortBy}
         onReset={handleResetFilters}
