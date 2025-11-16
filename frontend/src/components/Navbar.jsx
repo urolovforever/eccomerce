@@ -1,12 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
+import { getCategories } from '../api/api';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
+  const [mobileCategories, setMobileCategories] = useState(false);
+  const [categories, setCategories] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuth();
@@ -15,8 +19,20 @@ function Navbar() {
   const isActive = (path) => location.pathname === path;
   const cartCount = getCartCount();
 
+  // Kategoriyalarni fetch qilish
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await getCategories();
+        setCategories(response.data);
+      } catch (error) {
+        console.error('Kategoriyalar yuklashda xatolik:', error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
   const navLinks = [
-    { path: '/categories', label: 'Kategoriyalar' },
     { path: '/products?new=true', label: 'Yangiliklar' },
     { path: '/products?sale=true', label: 'Chegirmadagilar' },
     { path: '/about', label: 'Biz haqimizda' },
@@ -40,6 +56,46 @@ function Navbar() {
 
           {/* Center Navigation - Desktop Only */}
           <div className="hidden lg:flex items-center space-x-8">
+            {/* Kategoriyalar Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setCategoriesOpen(true)}
+              onMouseLeave={() => setCategoriesOpen(false)}
+            >
+              <button
+                className={`text-base font-bold transition-colors ${
+                  location.pathname === '/categories' || location.pathname.startsWith('/products?category=')
+                    ? 'text-gray-900 border-b-2 border-gray-900'
+                    : 'text-gray-700 hover:text-gray-900'
+                }`}
+              >
+                Kategoriyalar
+                <svg
+                  className={`inline-block ml-1 h-4 w-4 transition-transform ${categoriesOpen ? 'rotate-180' : ''}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {/* Dropdown Menu */}
+              {categoriesOpen && categories.length > 0 && (
+                <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-md shadow-lg border border-gray-100 py-2 z-50">
+                  {categories.map((category) => (
+                    <Link
+                      key={category.id}
+                      to={`/products?category=${category.slug}`}
+                      className="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                    >
+                      {category.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
             {navLinks.map((link) => (
               <Link
                 key={link.path}
@@ -180,6 +236,43 @@ function Navbar() {
         {/* Mobile Menu */}
         {isOpen && (
           <div className="lg:hidden py-4 border-t border-gray-100">
+            {/* Kategoriyalar Dropdown - Mobile */}
+            <div>
+              <button
+                onClick={() => setMobileCategories(!mobileCategories)}
+                className="w-full flex items-center justify-between py-3 px-4 text-base font-bold text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+              >
+                <span>Kategoriyalar</span>
+                <svg
+                  className={`h-5 w-5 transition-transform ${mobileCategories ? 'rotate-180' : ''}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {/* Kategoriyalar ro'yxati */}
+              {mobileCategories && categories.length > 0 && (
+                <div className="bg-gray-50 py-2">
+                  {categories.map((category) => (
+                    <Link
+                      key={category.id}
+                      to={`/products?category=${category.slug}`}
+                      onClick={() => {
+                        setIsOpen(false);
+                        setMobileCategories(false);
+                      }}
+                      className="block py-2 px-8 text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors"
+                    >
+                      {category.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
             {navLinks.map((link) => (
               <Link
                 key={link.path}
