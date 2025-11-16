@@ -126,20 +126,25 @@ else if (product.is_featured) → 'MASHHUR' (amber)
 
 ## 🎨 Color Palette
 
-### Badges
-- **NEW**: `bg-emerald-500` (#10b981)
-- **SALE**: `bg-red-500` (#ef4444)
-- **FEATURED**: `bg-amber-500` (#f59e0b)
+### Badges (Using Custom Theme)
+- **NEW**: `bg-primary-600` (#2C5BA5 - Professional blue from logo)
+- **SALE**: `bg-accent-600` (#DC3545 - Attention red from logo)
+- **FEATURED**: `bg-gold-600` (#DAA520 - Premium gold from logo)
 
 ### Buttons
 - **Primary (Add to Cart)**: `bg-gray-900` / `hover:bg-gray-800`
-- **Wishlist**: `bg-white/90` with backdrop blur
+- **Wishlist**: `bg-white/90` with backdrop blur, `text-accent-600` when favorited
 
-### Text
-- **Product Name**: `text-gray-900`
-- **Category**: `text-gray-500`
-- **Price**: `text-gray-900` (regular) / `text-red-600` (discounted)
+### Text (Using Custom Theme)
+- **Product Name**: `text-text-primary` (#2C3E50 - Soft black)
+- **Category**: `text-text-secondary` (#6C757D - Gray)
+- **Price**: `text-text-primary` (regular) / `text-accent-600` (discounted)
 - **Stock Warning**: `text-orange-600`
+
+### Surfaces & Borders
+- **Card Background**: `bg-surface-white` (#FFFFFF)
+- **Image Background**: `bg-surface-light` (#F8F9FA)
+- **Border**: `border-border-light` (#DEE2E6)
 
 ---
 

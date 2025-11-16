@@ -64,13 +64,13 @@ function ProductCard({ product }) {
   // Determine badge for product
   const getBadge = () => {
     if (product.product_type === 'new') {
-      return { text: 'YANGI', color: 'bg-emerald-500' };
+      return { text: 'YANGI', color: 'bg-primary-600' };
     }
     if (product.discount_percentage > 0 || product.product_type === 'discount') {
-      return { text: `${product.discount_percentage}% CHEGIRMA`, color: 'bg-red-500' };
+      return { text: `${product.discount_percentage}% CHEGIRMA`, color: 'bg-accent-600' };
     }
     if (product.is_featured) {
-      return { text: 'MASHHUR', color: 'bg-amber-500' };
+      return { text: 'MASHHUR', color: 'bg-gold-600' };
     }
     return null;
   };
@@ -79,14 +79,14 @@ function ProductCard({ product }) {
 
   return (
     <div
-      className="group relative bg-white rounded-lg overflow-hidden transition-all duration-500 hover:shadow-2xl border border-gray-100"
+      className="group relative bg-surface-white rounded-lg overflow-hidden transition-all duration-500 hover:shadow-2xl border border-border-light"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Product Image Container */}
       <Link
         to={`/products/${product.slug}`}
-        className="block relative aspect-[3/4] overflow-hidden bg-gray-50"
+        className="block relative aspect-[3/4] overflow-hidden bg-surface-light"
       >
         {/* Main Image */}
         <img
@@ -123,9 +123,9 @@ function ProductCard({ product }) {
           className="absolute top-3 right-3 z-10 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-all duration-200 hover:scale-110"
         >
           {isFavorite ? (
-            <HeartIconSolid className="w-5 h-5 text-red-500" />
+            <HeartIconSolid className="w-5 h-5 text-accent-600" />
           ) : (
-            <HeartIcon className="w-5 h-5 text-gray-700 hover:text-red-500 transition-colors" />
+            <HeartIcon className="w-5 h-5 text-gray-700 hover:text-accent-600 transition-colors" />
           )}
         </button>
 
@@ -159,14 +159,14 @@ function ProductCard({ product }) {
       <div className="p-4 space-y-2.5">
         {/* Product Name */}
         <Link to={`/products/${product.slug}`} className="block">
-          <h3 className="text-sm font-medium text-gray-900 line-clamp-2 hover:text-gray-600 transition-colors leading-relaxed">
+          <h3 className="text-sm font-medium text-text-primary line-clamp-2 hover:text-text-secondary transition-colors leading-relaxed">
             {product.name}
           </h3>
         </Link>
 
         {/* Category */}
         {product.category_name && (
-          <p className="text-xs text-gray-500 uppercase tracking-wider">
+          <p className="text-xs text-text-secondary uppercase tracking-wider">
             {product.category_name}
           </p>
         )}
@@ -175,7 +175,7 @@ function ProductCard({ product }) {
         <div className="flex items-baseline gap-2 pt-1">
           {product.discount_percentage > 0 ? (
             <>
-              <span className="text-lg font-bold text-red-600">
+              <span className="text-lg font-bold text-accent-600">
                 {formatPrice(discountedPrice)} so'm
               </span>
               <span className="text-sm text-gray-400 line-through font-normal">
@@ -183,7 +183,7 @@ function ProductCard({ product }) {
               </span>
             </>
           ) : (
-            <span className="text-lg font-bold text-gray-900">
+            <span className="text-lg font-bold text-text-primary">
               {formatPrice(product.price)} so'm
             </span>
           )}
