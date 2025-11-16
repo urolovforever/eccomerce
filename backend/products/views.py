@@ -27,6 +27,11 @@ class ProductListView(generics.ListAPIView):
         if category:
             queryset = queryset.filter(category__slug=category)
 
+        # Chegirma filter - faqat chegirmali mahsulotlar
+        discount = self.request.query_params.get('discount', None)
+        if discount == 'true':
+            queryset = queryset.filter(discount_percentage__gt=0)
+
         # Narx oralig'i filter
         min_price = self.request.query_params.get('min_price', None)
         max_price = self.request.query_params.get('max_price', None)
