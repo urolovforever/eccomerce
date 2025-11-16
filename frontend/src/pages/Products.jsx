@@ -311,6 +311,7 @@ function Products() {
             )}
           </>
         )}
+      </div>
 
       {/* Filter Sidebar */}
       <FilterSidebar
