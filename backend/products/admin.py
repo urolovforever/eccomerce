@@ -50,10 +50,6 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('image', 'image_2', 'image_3'),
             'classes': ('wide',)
         }),
-        ('🛒 Savdo Maydonchalari', {
-            'fields': ('uzum_link', 'yandex_market_link'),
-            'classes': ('wide',)
-        }),
         ('⚙️ Status', {
             'fields': ('is_featured', 'is_active'),
             'classes': ('wide',)

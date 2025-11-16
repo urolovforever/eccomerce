@@ -11,8 +11,6 @@ function ProductFormModal({ product, categories, onSave, onClose }) {
     price: product?.price || '',
     discount_percentage: product?.discount_percentage || 0,
     stock: product?.stock || 0,
-    uzum_link: product?.uzum_link || '',
-    yandex_market_link: product?.yandex_market_link || '',
     is_featured: product?.is_featured || false,
     is_active: product?.is_active !== undefined ? product.is_active : true,
   });
@@ -314,34 +312,6 @@ function ProductFormModal({ product, categories, onSave, onClose }) {
                   <span className="text-sm font-medium">{size}</span>
                 </label>
               ))}
-            </div>
-          </div>
-
-          {/* Links */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Uzum Market havola
-              </label>
-              <input
-                type="url"
-                name="uzum_link"
-                value={formData.uzum_link}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-wood-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Yandex Market havola
-              </label>
-              <input
-                type="url"
-                name="yandex_market_link"
-                value={formData.yandex_market_link}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-wood-500"
-              />
             </div>
           </div>
 

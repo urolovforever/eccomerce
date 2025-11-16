@@ -66,8 +66,6 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/', verbose_name="Asosiy rasm")
     image_2 = models.ImageField(upload_to='products/', blank=True, null=True, verbose_name="Rasm 2")
     image_3 = models.ImageField(upload_to='products/', blank=True, null=True, verbose_name="Rasm 3")
-    uzum_link = models.URLField(blank=True, null=True, verbose_name="Uzum Market havola")
-    yandex_market_link = models.URLField(blank=True, null=True, verbose_name="Yandex Market havola")
     discount_percentage = models.IntegerField(default=0, verbose_name="Chegirma foizi (0-100)")
     is_featured = models.BooleanField(default=False, verbose_name="Mashhur")
     is_active = models.BooleanField(default=True, verbose_name="Faol")

@@ -19,7 +19,7 @@ class ProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['id', 'name', 'slug', 'product_type', 'category', 'category_name', 'description', 'price',
-                  'colors', 'sizes', 'stock', 'image', 'image_2', 'image_3', 'uzum_link', 'yandex_market_link',
+                  'colors', 'sizes', 'stock', 'image', 'image_2', 'image_3',
                   'discount_percentage', 'is_featured']
 
 
@@ -30,7 +30,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['id', 'name', 'slug', 'product_type', 'category', 'category_name', 'description', 'price',
-                  'colors', 'sizes', 'stock', 'image', 'image_2', 'image_3', 'uzum_link', 'yandex_market_link',
+                  'colors', 'sizes', 'stock', 'image', 'image_2', 'image_3',
                   'discount_percentage', 'is_featured', 'created_at', 'similar_products']
 
     def get_similar_products(self, obj):
@@ -45,7 +45,7 @@ class ProductAdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['id', 'name', 'slug', 'product_type', 'category', 'category_name', 'description', 'price',
-                  'colors', 'sizes', 'stock', 'image', 'image_2', 'image_3', 'uzum_link', 'yandex_market_link',
+                  'colors', 'sizes', 'stock', 'image', 'image_2', 'image_3',
                   'discount_percentage', 'is_featured', 'is_active', 'created_at', 'updated_at']
         read_only_fields = ['slug', 'created_at', 'updated_at']
 
