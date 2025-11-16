@@ -49,33 +49,30 @@ export default function Register() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
-      <div className="max-w-md w-full">
-        <div className="bg-white rounded-lg shadow-lg p-8">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900">
-              Ro'yxatdan o'tish
-            </h2>
-            <p className="mt-2 text-gray-600">
-              Hisobingiz bormi?{' '}
-              <Link
-                to="/login"
-                className="text-purple-600 hover:text-purple-700 font-medium"
-              >
-                Kirish
-              </Link>
-            </p>
-          </div>
+      <div className="max-w-2xl w-full">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-light text-gray-900 tracking-wide mb-2">
+            Ro'yxatdan o'tish
+          </h1>
+          <p className="text-base text-gray-600 font-light">
+            Yangi hisob yarating va maxsus takliflardan bahramand bo'ling
+          </p>
+        </div>
 
+        {/* Form Card */}
+        <div className="bg-white border border-gray-200 p-8 md:p-10">
           {errors.error && (
-            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-600 text-sm">{errors.error}</p>
+            <div className="mb-6 p-4 bg-red-50 border border-red-200">
+              <p className="text-red-600 text-sm font-light">{errors.error}</p>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Name Fields */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-light text-gray-900 mb-2 tracking-wide uppercase">
                   Ism
                 </label>
                 <input
@@ -83,16 +80,16 @@ export default function Register() {
                   name="first_name"
                   value={formData.first_name}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-none focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-all font-light"
                   placeholder="Ism"
                 />
                 {errors.first_name && (
-                  <p className="text-red-500 text-xs mt-1">{errors.first_name}</p>
+                  <p className="text-red-500 text-xs mt-1 font-light">{errors.first_name}</p>
                 )}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-light text-gray-900 mb-2 tracking-wide uppercase">
                   Familiya
                 </label>
                 <input
@@ -100,17 +97,18 @@ export default function Register() {
                   name="last_name"
                   value={formData.last_name}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-none focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-all font-light"
                   placeholder="Familiya"
                 />
                 {errors.last_name && (
-                  <p className="text-red-500 text-xs mt-1">{errors.last_name}</p>
+                  <p className="text-red-500 text-xs mt-1 font-light">{errors.last_name}</p>
                 )}
               </div>
             </div>
 
+            {/* Username */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-light text-gray-900 mb-2 tracking-wide uppercase">
                 Foydalanuvchi nomi <span className="text-red-500">*</span>
               </label>
               <input
@@ -119,16 +117,17 @@ export default function Register() {
                 value={formData.username}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-none focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-all font-light"
                 placeholder="username"
               />
               {errors.username && (
-                <p className="text-red-500 text-xs mt-1">{errors.username}</p>
+                <p className="text-red-500 text-xs mt-1 font-light">{errors.username}</p>
               )}
             </div>
 
+            {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-light text-gray-900 mb-2 tracking-wide uppercase">
                 Email <span className="text-red-500">*</span>
               </label>
               <input
@@ -137,68 +136,99 @@ export default function Register() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-none focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-all font-light"
                 placeholder="email@example.com"
               />
               {errors.email && (
-                <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                <p className="text-red-500 text-xs mt-1 font-light">{errors.email}</p>
               )}
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Parol <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                minLength={6}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                placeholder="••••••••"
-              />
-              {errors.password && (
-                <p className="text-red-500 text-xs mt-1">{errors.password}</p>
-              )}
+            {/* Password Fields */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+              <div>
+                <label className="block text-sm font-light text-gray-900 mb-2 tracking-wide uppercase">
+                  Parol <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  minLength={6}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-none focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-all font-light"
+                  placeholder="••••••••"
+                />
+                {errors.password && (
+                  <p className="text-red-500 text-xs mt-1 font-light">{errors.password}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-light text-gray-900 mb-2 tracking-wide uppercase">
+                  Parolni tasdiqlang <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="password"
+                  name="password_confirm"
+                  value={formData.password_confirm}
+                  onChange={handleChange}
+                  required
+                  minLength={6}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-none focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-all font-light"
+                  placeholder="••••••••"
+                />
+                {errors.password_confirm && (
+                  <p className="text-red-500 text-xs mt-1 font-light">
+                    {errors.password_confirm}
+                  </p>
+                )}
+              </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Parolni tasdiqlang <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="password"
-                name="password_confirm"
-                value={formData.password_confirm}
-                onChange={handleChange}
-                required
-                minLength={6}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                placeholder="••••••••"
-              />
-              {errors.password_confirm && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.password_confirm}
-                </p>
-              )}
-            </div>
-
+            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-purple-600 text-white py-3 rounded-lg font-medium hover:bg-purple-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed mt-6"
+              className="w-full bg-gray-900 text-white py-3 rounded-none font-light tracking-wide hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed mt-8"
             >
-              {loading ? 'Yuklanmoqda...' : "Ro'yxatdan o'tish"}
+              {loading ? 'YUKLANMOQDA...' : "RO'YXATDAN O'TISH"}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <Link to="/" className="text-sm text-gray-600 hover:text-gray-900">
-              ← Bosh sahifaga qaytish
+          {/* Divider */}
+          <div className="relative my-8">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-200"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-4 bg-white text-gray-500 font-light">yoki</span>
+            </div>
+          </div>
+
+          {/* Login Link */}
+          <div className="text-center">
+            <p className="text-sm text-gray-600 font-light mb-4">
+              Hisobingiz bormi?
+            </p>
+            <Link
+              to="/login"
+              className="inline-block w-full px-6 py-3 border border-gray-900 text-gray-900 rounded-none font-light tracking-wide hover:bg-gray-900 hover:text-white transition-colors"
+            >
+              KIRISH
             </Link>
           </div>
+        </div>
+
+        {/* Footer Link */}
+        <div className="mt-8 text-center">
+          <Link
+            to="/"
+            className="text-sm text-gray-600 hover:text-gray-900 font-light transition-colors"
+          >
+            ← Bosh sahifaga qaytish
+          </Link>
         </div>
       </div>
     </div>
