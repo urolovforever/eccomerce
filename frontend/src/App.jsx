@@ -14,6 +14,7 @@ import Register from './pages/Register';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Orders from './pages/Orders';
+import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
@@ -58,6 +59,7 @@ function App() {
                       <Route path="/checkout" element={<Checkout />} />
                       <Route path="/orders" element={<Orders />} />
                       <Route path="/orders/:orderId" element={<Orders />} />
+                      <Route path="/profile" element={<Profile />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </main>

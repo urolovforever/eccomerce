@@ -153,6 +153,13 @@ function Navbar() {
                       {user?.username}
                     </div>
                     <Link
+                      to="/profile"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                    >
+                      Profil
+                    </Link>
+                    <Link
                       to="/orders"
                       onClick={() => setUserMenuOpen(false)}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
@@ -290,6 +297,13 @@ function Navbar() {
 
             {isAuthenticated ? (
               <>
+                <Link
+                  to="/profile"
+                  onClick={() => setIsOpen(false)}
+                  className="block py-3 px-4 text-base font-bold text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                >
+                  Profil
+                </Link>
                 <Link
                   to="/orders"
                   onClick={() => setIsOpen(false)}
