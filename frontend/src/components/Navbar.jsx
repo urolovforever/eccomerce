@@ -16,6 +16,7 @@ function Navbar() {
   const cartCount = getCartCount();
 
   const navLinks = [
+    { path: '/categories', label: 'Kategoriyalar' },
     { path: '/products?new=true', label: 'Yangiliklar' },
     { path: '/products?sale=true', label: 'Chegirmadagilar' },
     { path: '/about', label: 'Biz haqimizda' },
