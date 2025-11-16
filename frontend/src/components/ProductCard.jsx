@@ -37,17 +37,17 @@ function ProductCard({ product }) {
 
   return (
     <div
-      className="group relative bg-white overflow-hidden transition-all duration-300"
+      className="group relative bg-white overflow-hidden transition-all duration-500 hover:shadow-2xl"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Link to={`/products/${product.slug}`} className="block relative aspect-[3/4] overflow-hidden bg-gray-100">
+      <Link to={`/products/${product.slug}`} className="block relative aspect-[3/4] overflow-hidden bg-gray-50">
         {/* Main Image */}
         <img
           src={product.image}
           alt={product.name}
           className={`w-full h-full object-cover transition-all duration-700 ${
-            isHovered && product.image_2 ? 'opacity-0 scale-110' : 'opacity-100 scale-100'
+            isHovered && product.image_2 ? 'opacity-0 scale-105' : 'opacity-100 scale-100 group-hover:scale-105'
           }`}
         />
 
@@ -57,15 +57,15 @@ function ProductCard({ product }) {
             src={product.image_2}
             alt={`${product.name} - alternate`}
             className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${
-              isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-110'
+              isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
             }`}
           />
         )}
 
         {/* Discount Badge */}
         {product.discount_percentage > 0 && (
-          <div className="absolute top-2 left-2 z-10">
-            <span className="inline-block px-2 py-1 bg-red-600 text-white text-xs font-light">
+          <div className="absolute top-3 left-3 z-10">
+            <span className="inline-block px-3 py-1 bg-red-500 text-white text-xs font-medium tracking-wide">
               -{product.discount_percentage}%
             </span>
           </div>
@@ -78,17 +78,17 @@ function ProductCard({ product }) {
           <button
             onClick={handleAddToCart}
             disabled={addingToCart}
-            className="w-full py-3 bg-white text-gray-900 text-sm font-light hover:bg-gray-100 transition-colors duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed"
+            className="w-full py-3 bg-white text-gray-900 text-sm font-medium hover:bg-gray-900 hover:text-white transition-all duration-200 disabled:bg-gray-300 disabled:cursor-not-allowed tracking-wide"
           >
-            {addingToCart ? 'Qo\'shilmoqda...' : 'Savatga qo\'shish'}
+            {addingToCart ? 'QO\'SHILMOQDA...' : 'SAVATGA QO\'SHISH'}
           </button>
         </div>
       </Link>
 
       {/* Product Info */}
-      <div className="py-3 space-y-1">
+      <div className="py-4 space-y-2">
         <Link to={`/products/${product.slug}`} className="block">
-          <h3 className="text-sm font-light text-gray-900 line-clamp-2 hover:text-gray-600 transition-colors">
+          <h3 className="text-sm font-light text-gray-900 line-clamp-2 hover:text-gray-600 transition-colors tracking-wide">
             {product.name}
           </h3>
         </Link>
@@ -97,15 +97,15 @@ function ProductCard({ product }) {
         <div className="flex items-baseline gap-2">
           {product.discount_percentage > 0 ? (
             <>
-              <span className="text-sm font-light text-red-600">
+              <span className="text-base font-medium text-red-500">
                 {formatPrice(discountedPrice)} so'm
               </span>
-              <span className="text-xs text-gray-400 line-through font-light">
+              <span className="text-sm text-gray-400 line-through font-light">
                 {formatPrice(product.price)} so'm
               </span>
             </>
           ) : (
-            <span className="text-sm font-light text-gray-900">
+            <span className="text-base font-medium text-gray-900">
               {formatPrice(product.price)} so'm
             </span>
           )}
@@ -113,7 +113,7 @@ function ProductCard({ product }) {
 
         {/* External Links - Minimal */}
         {(product.uzum_link || product.yandex_market_link) && (
-          <div className="flex gap-2 pt-2">
+          <div className="flex gap-3 pt-1">
             {product.uzum_link && (
               <a
                 href={product.uzum_link}
@@ -122,7 +122,7 @@ function ProductCard({ product }) {
                 onClick={(e) => e.stopPropagation()}
                 className="text-xs text-gray-500 hover:text-gray-900 font-light underline transition-colors"
               >
-                Uzum
+                Uzum Market
               </a>
             )}
             {product.yandex_market_link && (
@@ -133,7 +133,7 @@ function ProductCard({ product }) {
                 onClick={(e) => e.stopPropagation()}
                 className="text-xs text-gray-500 hover:text-gray-900 font-light underline transition-colors"
               >
-                Yandex
+                Yandex Market
               </a>
             )}
           </div>

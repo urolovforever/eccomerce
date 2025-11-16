@@ -53,37 +53,37 @@ function FilterSidebar({
         }`}
       >
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+        <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-bold text-text-primary">Filterlar</h2>
-            <p className="text-sm text-gray-600">{resultCount} ta mahsulot</p>
+            <h2 className="text-2xl font-light text-gray-900 tracking-wide">Filterlar</h2>
+            <p className="text-sm text-gray-500 font-light mt-1">{resultCount} ta mahsulot</p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            className="p-2 hover:bg-gray-100 transition-colors"
             aria-label="Yopish"
           >
             <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-6">
+        <div className="p-6 space-y-8">
           {/* Kategoriya */}
           <div>
-            <label className="block text-sm font-bold text-text-primary mb-3">
-              📦 Kategoriya
+            <label className="block text-sm font-light text-gray-900 mb-4 tracking-wide uppercase">
+              Kategoriya
             </label>
-            <div className="space-y-2">
+            <div className="space-y-1">
               <button
                 type="button"
                 onClick={() => onCategoryChange(null)}
-                className={`w-full text-left px-4 py-3 rounded-lg text-sm font-semibold transition-all ${
+                className={`w-full text-left px-4 py-3 text-sm font-light transition-all ${
                   !selectedCategory
-                    ? 'bg-primary text-white shadow-soft-md'
-                    : 'bg-surface-light text-text-primary hover:bg-surface-gray'
+                    ? 'bg-gray-900 text-white'
+                    : 'bg-gray-50 text-gray-900 hover:bg-gray-100'
                 }`}
               >
                 Barchasi
@@ -93,20 +93,22 @@ function FilterSidebar({
                   key={category.id}
                   type="button"
                   onClick={() => onCategoryChange(category.slug)}
-                  className={`w-full text-left px-4 py-3 rounded-lg text-sm font-semibold transition-all flex items-center justify-between ${
+                  className={`w-full text-left px-4 py-3 text-sm font-light transition-all flex items-center justify-between ${
                     selectedCategory === category.slug
-                      ? 'bg-primary text-white shadow-soft-md'
-                      : 'bg-surface-light text-text-primary hover:bg-surface-gray'
+                      ? 'bg-gray-900 text-white'
+                      : 'bg-gray-50 text-gray-900 hover:bg-gray-100'
                   }`}
                 >
                   <span>{category.name}</span>
-                  <span className={`text-xs px-2 py-1 rounded-full ${
-                    selectedCategory === category.slug
-                      ? 'bg-white/20 text-white'
-                      : 'bg-gray-200 text-gray-600'
-                  }`}>
-                    {category.product_count}
-                  </span>
+                  {category.product_count && (
+                    <span className={`text-xs px-2 py-0.5 ${
+                      selectedCategory === category.slug
+                        ? 'bg-white/20 text-white'
+                        : 'bg-gray-200 text-gray-600'
+                    }`}>
+                      {category.product_count}
+                    </span>
+                  )}
                 </button>
               ))}
             </div>
@@ -114,28 +116,28 @@ function FilterSidebar({
 
           {/* Narx Oralig'i */}
           <div>
-            <label className="block text-sm font-bold text-text-primary mb-3">
-              💰 Narx Oralig'i
+            <label className="block text-sm font-light text-gray-900 mb-4 tracking-wide uppercase">
+              Narx Oralig'i
             </label>
-            <div className="space-y-3">
+            <div className="space-y-4">
               <div>
-                <label className="block text-xs text-gray-600 mb-1">Minimal narx (so'm)</label>
+                <label className="block text-xs text-gray-500 mb-2 font-light">Minimal narx (so'm)</label>
                 <input
                   type="number"
                   placeholder="0"
                   value={priceRange.min}
                   onChange={(e) => onPriceChange({ ...priceRange, min: e.target.value })}
-                  className="w-full px-4 py-2 border-2 border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-text-primary"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-none focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-all text-gray-900 font-light"
                 />
               </div>
               <div>
-                <label className="block text-xs text-gray-600 mb-1">Maksimal narx (so'm)</label>
+                <label className="block text-xs text-gray-500 mb-2 font-light">Maksimal narx (so'm)</label>
                 <input
                   type="number"
                   placeholder="1000000"
                   value={priceRange.max}
                   onChange={(e) => onPriceChange({ ...priceRange, max: e.target.value })}
-                  className="w-full px-4 py-2 border-2 border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all text-text-primary"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-none focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-all text-gray-900 font-light"
                 />
               </div>
             </div>
@@ -143,38 +145,39 @@ function FilterSidebar({
 
           {/* Sortlash */}
           <div>
-            <label className="block text-sm font-bold text-text-primary mb-3">
-              🔄 Saralash
+            <label className="block text-sm font-light text-gray-900 mb-4 tracking-wide uppercase">
+              Saralash
             </label>
             <select
               value={sortBy}
               onChange={(e) => onSortChange(e.target.value)}
-              className="w-full px-4 py-2 border-2 border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all appearance-none bg-white text-text-primary font-medium"
+              className="w-full px-4 py-3 border border-gray-300 rounded-none focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-all appearance-none bg-white text-gray-900 font-light"
             >
               <option value="">Standart</option>
-              <option value="price_asc">💵 Narx: Arzondan qimmatga</option>
-              <option value="price_desc">💰 Narx: Qimmatdan arzonga</option>
-              <option value="name_asc">🔤 Nomi: A-Z</option>
-              <option value="name_desc">🔤 Nomi: Z-A</option>
-              <option value="newest">🆕 Eng yangilari</option>
-              <option value="oldest">⏰ Eng eskilari</option>
+              <option value="price_asc">Narx: Arzondan qimmatga</option>
+              <option value="price_desc">Narx: Qimmatdan arzonga</option>
+              <option value="name_asc">Nomi: A-Z</option>
+              <option value="name_desc">Nomi: Z-A</option>
+              <option value="newest">Eng yangilari</option>
+              <option value="oldest">Eng eskilari</option>
+              <option value="popular">Mashhur</option>
             </select>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-white border-t border-gray-200 p-4 space-y-2">
+        <div className="sticky bottom-0 bg-white border-t border-gray-200 p-6 space-y-3">
           <button
             onClick={onReset}
-            className="w-full px-4 py-3 bg-surface-light text-text-primary rounded-lg font-semibold hover:bg-surface-gray transition-colors"
+            className="w-full px-4 py-3 bg-gray-100 text-gray-900 rounded-none font-light hover:bg-gray-200 transition-colors tracking-wide"
           >
-            🗑️ Filterlarni tozalash
+            Filterlarni tozalash
           </button>
           <button
             onClick={onClose}
-            className="w-full px-4 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors shadow-soft-md"
+            className="w-full px-4 py-3 bg-gray-900 text-white rounded-none font-light hover:bg-gray-800 transition-colors tracking-wide"
           >
-            Natijalarni ko'rish
+            NATIJALARNI KO'RISH
           </button>
         </div>
       </div>
