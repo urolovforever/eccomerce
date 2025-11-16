@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
@@ -37,11 +38,15 @@ function Navbar() {
           </Link>
 
           {/* Center Navigation - Desktop Only */}
+          <div className="hidden lg:flex items-center space-x-8">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
+                className={`text-base font-bold transition-colors ${
                   isActive(link.path)
+                    ? 'text-gray-900 border-b-2 border-gray-900'
+                    : 'text-gray-700 hover:text-gray-900'
                 }`}
               >
                 {link.label}
@@ -179,6 +184,10 @@ function Navbar() {
                 key={link.path}
                 to={link.path}
                 onClick={() => setIsOpen(false)}
+                className={`block py-3 px-4 text-base font-bold transition-colors ${
+                  isActive(link.path)
+                    ? 'text-gray-900 bg-gray-50'
+                    : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
                 }`}
               >
                 {link.label}
@@ -190,6 +199,7 @@ function Navbar() {
                 <Link
                   to="/orders"
                   onClick={() => setIsOpen(false)}
+                  className="block py-3 px-4 text-base font-bold text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
                 >
                   Buyurtmalarim
                 </Link>
@@ -198,6 +208,7 @@ function Navbar() {
                     handleLogout();
                     setIsOpen(false);
                   }}
+                  className="block w-full text-left py-3 px-4 text-base font-bold text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
                 >
                   Chiqish ({user?.username})
                 </button>
@@ -206,6 +217,7 @@ function Navbar() {
               <Link
                 to="/login"
                 onClick={() => setIsOpen(false)}
+                className="block py-3 px-4 text-base font-bold text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
               >
                 Kirish
               </Link>
