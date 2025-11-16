@@ -23,6 +23,12 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    PRODUCT_TYPE_CHOICES = [
+        ('new', 'Yangi'),
+        ('discount', 'Chegirmadagi'),
+        ('regular', 'Oddiy'),
+    ]
+
     COLOR_CHOICES = [
         ('qora', 'Qora'),
         ('oq', 'Oq'),
@@ -50,15 +56,17 @@ class Product(models.Model):
 
     name = models.CharField(max_length=200, verbose_name="Mahsulot nomi")
     slug = models.SlugField(unique=True, blank=True)
+    product_type = models.CharField(max_length=20, choices=PRODUCT_TYPE_CHOICES, default='regular', verbose_name="Mahsulot turi")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', verbose_name="Kategoriya")
     description = models.TextField(verbose_name="Tavsif")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Narx (so'm)")
-    color = models.CharField(max_length=50, choices=COLOR_CHOICES, blank=True, null=True, verbose_name="Rang")
-    size = models.CharField(max_length=10, choices=SIZE_CHOICES, blank=True, null=True, verbose_name="O'lcham")
+    colors = models.JSONField(default=list, verbose_name="Ranglar", help_text="Mavjud ranglar ro'yxati")
+    sizes = models.JSONField(default=list, verbose_name="O'lchamlar", help_text="Mavjud o'lchamlar ro'yxati")
+    stock = models.PositiveIntegerField(default=0, verbose_name="Omborda mavjud miqdor")
     image = models.ImageField(upload_to='products/', verbose_name="Asosiy rasm")
     image_2 = models.ImageField(upload_to='products/', blank=True, null=True, verbose_name="Rasm 2")
     image_3 = models.ImageField(upload_to='products/', blank=True, null=True, verbose_name="Rasm 3")
-    uzum_link = models.URLField(verbose_name="Uzum Market havola")
+    uzum_link = models.URLField(blank=True, null=True, verbose_name="Uzum Market havola")
     yandex_market_link = models.URLField(blank=True, null=True, verbose_name="Yandex Market havola")
     discount_percentage = models.IntegerField(default=0, verbose_name="Chegirma foizi (0-100)")
     is_featured = models.BooleanField(default=False, verbose_name="Mashhur")

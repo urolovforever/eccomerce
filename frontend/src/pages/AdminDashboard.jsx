@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { checkAuth, logout, getAdminProducts, getCategories, updateProduct, deleteProduct } from '../api/api';
-import ProductEditModal from '../components/ProductEditModal';
+import { checkAuth, logout, getAdminProducts, getCategories, createProduct, updateProduct, deleteProduct } from '../api/api';
+import ProductFormModal from '../components/ProductFormModal';
 import DeleteConfirmModal from '../components/DeleteConfirmModal';
 
 function AdminDashboard() {
@@ -12,6 +12,7 @@ function AdminDashboard() {
   const [error, setError] = useState('');
   const [editingProduct, setEditingProduct] = useState(null);
   const [deletingProduct, setDeletingProduct] = useState(null);
+  const [showCreateModal, setShowCreateModal] = useState(false);
   const navigate = useNavigate();
 
   // Authentication check
@@ -73,6 +74,22 @@ function AdminDashboard() {
 
   const handleDelete = (product) => {
     setDeletingProduct(product);
+  };
+
+  const handleCreateProduct = async (formData) => {
+    try {
+      await createProduct(formData);
+
+      // Refresh products list
+      const response = await getAdminProducts();
+      setProducts(response.data.results || response.data);
+
+      setShowCreateModal(false);
+      alert('Mahsulot muvaffaqiyatli qo\'shildi!');
+    } catch (err) {
+      console.error('Create error:', err);
+      alert('Mahsulot qo\'shishda xatolik yuz berdi: ' + (err.response?.data?.error || err.message));
+    }
   };
 
   const handleSaveEdit = async (id, formData) => {
@@ -143,8 +160,14 @@ function AdminDashboard() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white rounded-lg shadow overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
+          <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
             <h2 className="text-xl font-semibold text-wood-900">Mahsulotlar ro'yxati</h2>
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="bg-wood-600 hover:bg-wood-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+            >
+              + Mahsulot qo'shish
+            </button>
           </div>
 
           {error && (
@@ -245,9 +268,18 @@ function AdminDashboard() {
         </div>
       </main>
 
+      {/* Create Modal */}
+      {showCreateModal && (
+        <ProductFormModal
+          categories={categories}
+          onSave={handleCreateProduct}
+          onClose={() => setShowCreateModal(false)}
+        />
+      )}
+
       {/* Edit Modal */}
       {editingProduct && (
-        <ProductEditModal
+        <ProductFormModal
           product={editingProduct}
           categories={categories}
           onSave={handleSaveEdit}

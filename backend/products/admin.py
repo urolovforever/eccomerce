@@ -19,8 +19,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['image_preview', 'name', 'category', 'formatted_price', 'discount_badge', 'is_featured', 'is_active', 'created_at']
-    list_filter = ['category', 'is_featured', 'is_active', 'created_at']
+    list_display = ['image_preview', 'name', 'product_type_badge', 'category', 'formatted_price', 'discount_badge', 'stock', 'is_featured', 'is_active', 'created_at']
+    list_filter = ['product_type', 'category', 'is_featured', 'is_active', 'created_at']
     search_fields = ['name', 'description']
     prepopulated_fields = {'slug': ('name',)}
     list_editable = ['is_featured', 'is_active']
@@ -29,17 +29,22 @@ class ProductAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('📦 Asosiy Ma\'lumotlar', {
-            'fields': ('name', 'slug', 'category', 'description'),
+            'fields': ('name', 'slug', 'product_type', 'category', 'description'),
             'classes': ('wide',)
         }),
-        ('💰 Narx', {
-            'fields': ('price',),
+        ('💰 Narx va Miqdor', {
+            'fields': ('price', 'stock'),
             'classes': ('wide',)
         }),
         ('🏷️ Chegirma', {
             'fields': ('discount_percentage',),
             'classes': ('wide',),
             'description': 'Chegirma foizini kiriting (0-100 oralig\'ida)'
+        }),
+        ('🎨 Xususiyatlar', {
+            'fields': ('colors', 'sizes'),
+            'classes': ('wide',),
+            'description': 'Ranglar va o\'lchamlar ro\'yxati (JSON formatida)'
         }),
         ('🖼️ Rasmlar', {
             'fields': ('image', 'image_2', 'image_3'),
@@ -86,6 +91,26 @@ class ProductAdmin(admin.ModelAdmin):
 
     discount_badge.short_description = 'Chegirma'
     discount_badge.admin_order_field = 'discount_percentage'
+
+    def product_type_badge(self, obj):
+        colors = {
+            'new': '#4caf50',
+            'discount': '#ff3b3f',
+            'regular': '#2196f3',
+        }
+        labels = {
+            'new': 'Yangi',
+            'discount': 'Chegirmada',
+            'regular': 'Oddiy',
+        }
+        return format_html(
+            '<span style="background: {}; color: white; padding: 4px 8px; border-radius: 4px; font-weight: bold;">{}</span>',
+            colors.get(obj.product_type, '#999'),
+            labels.get(obj.product_type, obj.product_type)
+        )
+
+    product_type_badge.short_description = 'Turi'
+    product_type_badge.admin_order_field = 'product_type'
 
     # Rasm yuklanganda avtomatik preview
     readonly_fields = ['image_preview_large']
