@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-dev-key')
 DEBUG = config('DEBUG', default=True, cast=bool)
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=lambda v: [s.strip() for s in v.split(',')])
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,192.168.199.193', cast=lambda v: [s.strip() for s in v.split(',')])
 
 INSTALLED_APPS = [
     'jazzmin',  # Admin panel dizayni (django.contrib.admin dan oldin!)
@@ -130,6 +130,12 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
 ]
 
+# Development uchun local network IP'larni qo'llab-quvvatlash
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^http://192\.168\.\d{1,3}\.\d{1,3}:\d+$",  # 192.168.x.x:port
+    r"^http://10\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+$",  # 10.x.x.x:port
+]
+
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = False  # Production uchun False
 
@@ -156,6 +162,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://moongift-frontend.onrender.com",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "http://192.168.199.193:5173",  # Local network development
 ]
 
 # Security headers
